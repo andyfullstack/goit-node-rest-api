@@ -5,7 +5,7 @@ import {
   getOneContact,
   deleteContact,
   createContact,
-  updateContact,
+  updatedContact,
 } from "../controllers/contactsControllers.js";
 
 const contactsRouter = express.Router();
@@ -18,6 +18,6 @@ contactsRouter.delete("/:id", deleteContact);
 
 contactsRouter.post("/", createContact);
 
-contactsRouter.put("/:id", updateContact);
+contactsRouter.put("/:id", updatedContact);
 
 export default contactsRouter;
