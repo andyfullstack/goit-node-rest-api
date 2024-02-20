@@ -1,6 +1,13 @@
-import contactsService from "../services/contactsServices";
-import HttpError from "../helpers/HttpError.js";
-import schema from "../schemas/contactsSchemas.js";
+import {
+  listContacts,
+  removeContact,
+  addContact,
+} from "../services/contactsServices.js";
+
+import {
+  createContactSchema,
+  updateContactSchema,
+} from "../schemas/contactsSchemas.js";
 
 export const getAllContacts = async (req, res, next) => {
   try {
@@ -50,7 +57,7 @@ export const createContact = async (req, res, next) => {
   }
 };
 
-export const updateContact = async (req, res, next) => {
+export const updatedContact = async (req, res, next) => {
   try {
     const { id } = req.params;
     const bodyIsEmpty = Object.keys(req.body).length === 0;
