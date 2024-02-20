@@ -1,17 +1,25 @@
 import fs from "fs/promises";
 import crypto from "crypto";
 import path from "path";
-// import HttpError from "../helpers/HttpError.js";
 
-const contactsPath = path.join(__dirname, "../db/contacts.json");
+const contactsPath = path.join("db", "contacts.json");
 
-export async function listContacts() {
+async function listContacts() {
   try {
     return JSON.parse(await fs.readFile(contactsPath, "utf-8"));
   } catch (error) {
     return null;
   }
 }
+
+async function getAllContacts() {
+  const contacts = await listContacts();
+
+  return contacts;
+}
+
+const writeContacts = contacts =>
+  fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 
 export async function getContactById(contactId) {
   try {
@@ -58,7 +66,7 @@ export async function removeContact(contactId) {
   }
 }
 
-export async function updatedContact(contactId, body) {
+export async function updateContact(contactId, body) {
   try {
     const contacts = await listContacts();
     const index = contacts.findIndex(contact => contact.id === contactId);
@@ -72,3 +80,11 @@ export async function updatedContact(contactId, body) {
     return null;
   }
 }
+
+export default {
+  listContacts,
+  getAllContacts,
+  getContactById,
+  removeContact,
+  addContact,
+};
