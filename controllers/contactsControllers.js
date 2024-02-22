@@ -1,5 +1,6 @@
 import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
+import { updatedContactSchema } from "../schemas/contactsSchemas.js";
 
 export const getAllContacts = async (req, res, next) => {
   try {
@@ -58,7 +59,7 @@ export const updateContact = async (req, res, next) => {
       throw HttpError(400, "Body must have at least one field");
     }
 
-    const { error } = schema.updatedContactSchema.validate(req.body);
+    const { error } = updatedContactSchema.validate(req.body);
 
     if (error) {
       throw HttpError(400, error.message);
