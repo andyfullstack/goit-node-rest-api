@@ -18,19 +18,16 @@ async function getAllContacts() {
   return contacts;
 }
 
-const writeContacts = contacts =>
-  fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-
-export async function getContactById(contactId) {
+async function getContactById(id) {
   try {
     const contacts = await listContacts();
-    return contacts.find(contact => contact.id === contactId) || null;
+    return contacts.find(contact => contact.id === id) || null;
   } catch (error) {
     return null;
   }
 }
 
-export async function addContact(name, email, phone) {
+async function addContact(name, email, phone) {
   try {
     const contacts = await listContacts();
     const newContact = {
@@ -40,21 +37,19 @@ export async function addContact(name, email, phone) {
       phone,
     };
     contacts.push(newContact);
-    await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    await fs.writeFile(contactsPath, JSON.stringify(contacts, null));
     return newContact;
   } catch (error) {
     return null;
   }
 }
 
-export async function removeContact(contactId) {
+async function removeContact(id) {
   try {
     const contacts = await listContacts();
-    const removedContact = contacts.find(contact => contact.id === contactId);
+    const removedContact = contacts.find(contact => contact.id === id);
     if (removedContact) {
-      const updatedContacts = contacts.filter(
-        contact => contact.id !== contactId
-      );
+      const updatedContacts = contacts.filter(contact => contact.id !== id);
       await fs.writeFile(
         contactsPath,
         JSON.stringify(updatedContacts, null, 2)
@@ -66,10 +61,10 @@ export async function removeContact(contactId) {
   }
 }
 
-export async function updateContact(contactId, body) {
+async function updateContact(id, body) {
   try {
     const contacts = await listContacts();
-    const index = contacts.findIndex(contact => contact.id === contactId);
+    const index = contacts.findIndex(contact => contact.id === id);
     if (index !== -1) {
       const updatedContact = { ...contacts[index], ...body };
       contacts[index] = updatedContact;
@@ -87,4 +82,5 @@ export default {
   getContactById,
   removeContact,
   addContact,
+  updateContact,
 };
