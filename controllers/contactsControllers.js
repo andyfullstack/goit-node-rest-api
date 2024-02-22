@@ -1,15 +1,3 @@
-// import {
-//   listContacts,
-//   removeContact,
-//   addContact,
-//   validate,
-// } from "../services/contactsServices.js";
-
-// import {
-//   createContactSchema,
-//   updateContactSchema,
-// } from "../schemas/contactsSchemas.js";
-
 import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
 
@@ -48,15 +36,15 @@ export const deleteContact = async (req, res, next) => {
   }
 };
 
-export const createContact = async (req, res, next) => {
+export const createContact = async (req, res) => {
   try {
-    const { error } = schema.createContactSchema.validate(req.body);
-    if (error) {
-      throw HttpError(400, error.message);
-    }
-    const result = await contactsService.addContact(req.body);
-    res.status(201).json(result);
+    const { name, email, phone } = req.body;
+
+    const newContact = await contactsService.addContact(name, email, phone);
+    res.status(201).json(newContact);
+    console.log(newContact);
   } catch (error) {
+    res.status(400).json({ message: error.message });
     next(error);
   }
 };
@@ -64,13 +52,13 @@ export const createContact = async (req, res, next) => {
 export const updateContact = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const bodyIsEmpty = Object.keys(req.body).length === 0;
+    const bodyCheck = Object.keys(req.body).length === 0;
 
-    if (bodyIsEmpty) {
+    if (bodyCheck) {
       throw HttpError(400, "Body must have at least one field");
     }
 
-    const { error } = schema.updateContactSchema.validate(req.body);
+    const { error } = schema.updatedContactSchema.validate(req.body);
 
     if (error) {
       throw HttpError(400, error.message);

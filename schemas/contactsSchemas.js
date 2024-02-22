@@ -11,5 +11,3 @@ export const updatedContactSchema = Joi.object({
   email: Joi.string().email({ minDomainSegments: 2 }),
   phone: Joi.string(),
 });
-
-// export default { createContactSchema, updateContactSchema };
