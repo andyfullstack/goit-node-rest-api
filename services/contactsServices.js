@@ -21,6 +21,7 @@ async function getAllContacts() {
 async function getContactById(id) {
   try {
     const contacts = await listContacts();
+
     return contacts.find(contact => contact.id === id) || null;
   } catch (error) {
     return null;
