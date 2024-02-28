@@ -1,8 +1,9 @@
 import fs from "fs/promises";
 import crypto from "crypto";
 import path from "path";
+import { Contact } from "../schemas/mongoSchema.js";
 
-const contactsPath = path.join("db", "contacts.json");
+// const contactsPath = path.join("db", "contacts.json");
 
 async function listContacts() {
   try {
@@ -62,17 +63,50 @@ async function removeContact(id) {
   }
 }
 
-async function updateContact(id, body) {
+// async function updateContact(id, body) {
+//   try {
+//     const contacts = await listContacts();
+//     const index = contacts.findIndex(contact => contact.id === id);
+//     if (index !== -1) {
+//       const updatedContact = { ...contacts[index], ...body };
+//       contacts[index] = updatedContact;
+//       await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+//       return updatedContact;
+//     }
+//   } catch (error) {
+//     return null;
+//   }
+// }
+
+async function updateContactService(id, name, email, phone) {
   try {
-    const contacts = await listContacts();
-    const index = contacts.findIndex(contact => contact.id === id);
-    if (index !== -1) {
-      const updatedContact = { ...contacts[index], ...body };
-      contacts[index] = updatedContact;
-      await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-      return updatedContact;
+    const existingContact = await Contact.findById(id);
+
+    if (!existingContact) {
+      return null;
     }
+
+    existingContact.name = name || existingContact.name;
+    existingContact.email = email || existingContact.email;
+    existingContact.phone = phone || existingContact.phone;
+
+    await existingContact.save();
+
+    return existingContact;
   } catch (error) {
+    return null;
+  }
+}
+async function updateStatusContact(id, favorite) {
+  try {
+    const updatedContact = await Contact.findByIdAndUpdate(
+      id,
+      { favorite },
+      { new: true }
+    );
+    return updatedContact;
+  } catch (error) {
+    console.error(`Error updating contact's status: ${error}`);
     return null;
   }
 }
@@ -83,5 +117,6 @@ export default {
   getContactById,
   removeContact,
   addContact,
-  updateContact,
+  updateStatusContact,
+  updateContactService,
 };
