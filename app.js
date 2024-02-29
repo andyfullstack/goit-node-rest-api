@@ -1,14 +1,15 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+// import "dotenv/config";
 import dotenv from "dotenv";
+dotenv.config();
 
 import contactsRouter from "./routes/contactsRouter.js";
 
 const app = express();
 
-dotenv.config();
-const tiny = app.get("env") === "development" ? "dev" : "short";
+// const tiny = app.get("env") === "development" ? "dev" : "short";
 
 app.use(morgan("tiny"));
 app.use(cors());
