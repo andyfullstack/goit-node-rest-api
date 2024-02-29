@@ -9,7 +9,7 @@ import contactsRouter from "./routes/contactsRouter.js";
 
 const app = express();
 
-// const tiny = app.get("env") === "development" ? "dev" : "short";
+const tiny = app.get("env") === "development" ? "dev" : "short";
 
 app.use(morgan("tiny"));
 app.use(cors());
