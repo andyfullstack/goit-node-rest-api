@@ -1,5 +1,10 @@
 import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
+// import {
+//   updateStatusContact,
+//   updateContactService,
+// } from "../services/contactsServices.js";
+
 // import { updatedContactSchema } from "../schemas/contactsSchemas.js";
 
 export const getAllContacts = async (req, res, next) => {
@@ -80,7 +85,7 @@ export const updateContact = async (req, res) => {
       .status(400)
       .json({ message: "Body must have at least one field" });
   }
-  const { error } = updateContactSchema.validate({ name, email, phone });
+  const { error } = updatedContactSchema.validate({ name, email, phone });
   if (error) {
     return res.status(400).json({ message: error.message });
   }
