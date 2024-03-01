@@ -72,7 +72,7 @@ export const updateContact = async (req, res) => {
   );
 
   if (updatedContact) {
-    res.status(200).json(updatedContact);
+    res.status(201).json(updatedContact);
   } else {
     res.status(404).json({ message: "Not found" });
   }
