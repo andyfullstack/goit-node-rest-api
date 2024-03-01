@@ -1,6 +1,5 @@
 import app from "./app.js";
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 import { connectDB } from "./api/mongoConnection.js";
 

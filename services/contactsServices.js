@@ -1,6 +1,3 @@
-// import fs from "fs/promises";
-// import crypto from "crypto";
-// import path from "path";
 import { Contact } from "../schemas/mongoSchema.js";
 
 async function listContacts() {
@@ -40,21 +37,6 @@ async function removeContact(id) {
     return null;
   }
 }
-
-// async function updateContact(id, body) {
-//   try {
-//     const contacts = await listContacts();
-//     const index = contacts.findIndex(contact => contact.id === id);
-//     if (index !== -1) {
-//       const updatedContact = { ...contacts[index], ...body };
-//       contacts[index] = updatedContact;
-//       await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-//       return updatedContact;
-//     }
-//   } catch (error) {
-//     return null;
-//   }
-// }
 
 async function updateContactService(id, name, email, phone) {
   try {
