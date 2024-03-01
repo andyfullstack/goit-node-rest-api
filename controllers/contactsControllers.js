@@ -1,21 +1,15 @@
-import {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContactService,
-  updateStatusContact,
-} from "../services/contactsServices.js";
+import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
+// import {
+//   updateStatusContact,
+//   updateContactService,
+// } from "../services/contactsServices.js";
 
-import {
-  updatedContactSchema,
-  createdContactSchema,
-} from "../schemas/contactsSchemas.js";
+import { updatedContactSchema } from "../schemas/contactsSchemas.js";
 
 export const getAllContacts = async (req, res, next) => {
   try {
-    const result = await listContacts();
+    const result = await contactsService.listContacts();
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -25,7 +19,7 @@ export const getAllContacts = async (req, res, next) => {
 export const getOneContact = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await getContactById(id);
+    const result = await contactsService.getContactById(id);
     if (!result) {
       throw HttpError(404);
     }
@@ -39,7 +33,7 @@ export const deleteContact = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const result = await removeContact(id);
+    const result = await contactsService.removeContact(id);
     if (!result) {
       throw HttpError(404);
     }
@@ -53,17 +47,15 @@ export const createContact = async (req, res) => {
   try {
     const { name, email, phone } = req.body;
 
-    const { error } = createdContactSchema.validate({ name, email, phone });
-    if (error) {
-      return res.status(400).json({ message: error.message });
-    }
-
-    const newContact = await addContact(name, email, phone);
+    const newContact = await contactsService.addContact(name, email, phone);
     res.status(201).json(newContact);
+    console.log(newContact);
   } catch (error) {
+    res.status(400).json({ message: error.message });
     next(error);
   }
 };
+
 // export const updateContact = async (req, res, next) => {
 //   try {
 //     const { id } = req.params;
