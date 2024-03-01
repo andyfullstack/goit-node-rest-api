@@ -3,8 +3,6 @@
 // import path from "path";
 import { Contact } from "../schemas/mongoSchema.js";
 
-// const contactsPath = path.join("db", "contacts.json");
-
 async function listContacts() {
   try {
     const contacts = Contact.find();
@@ -16,7 +14,7 @@ async function listContacts() {
 
 async function getContactById(id) {
   try {
-    const contacts = await Contact.findById();
+    const contacts = await Contact.findById(id);
 
     return contacts || null;
   } catch (error) {
