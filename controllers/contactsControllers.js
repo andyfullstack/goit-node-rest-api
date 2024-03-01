@@ -1,9 +1,5 @@
 import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
-// import {
-//   updateStatusContact,
-//   updateContactService,
-// } from "../services/contactsServices.js";
 
 import { updatedContactSchema } from "../schemas/contactsSchemas.js";
 
@@ -56,27 +52,6 @@ export const createContact = async (req, res) => {
   }
 };
 
-// export const updateContact = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const bodyCheck = Object.keys(req.body).length === 0;
-
-//     if (bodyCheck) {
-//       throw HttpError(400, "Body must have at least one field");
-//     }
-
-//     const result = await contactsService.updateContact(id, req.body);
-
-//     if (!result) {
-//       throw HttpError(404);
-//     }
-
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 export const updateContact = async (req, res) => {
   const { id } = req.params;
   const { name, email, phone } = req.body;
@@ -89,7 +64,12 @@ export const updateContact = async (req, res) => {
   if (error) {
     return res.status(400).json({ message: error.message });
   }
-  const updatedContact = await updateContactService(id, name, email, phone);
+  const updatedContact = await contactsService.updateContactService(
+    id,
+    name,
+    email,
+    phone
+  );
 
   if (updatedContact) {
     res.status(200).json(updatedContact);
@@ -109,7 +89,10 @@ export const patchUpdateContact = async (req, res) => {
         .json({ message: "Favorite must be a boolean value" });
     }
 
-    const updatedContact = await updateStatusContact(id, favorite);
+    const updatedContact = await contactsService.updateStatusContact(
+      id,
+      favorite
+    );
 
     if (updatedContact) {
       res.status(200).json(updatedContact);
