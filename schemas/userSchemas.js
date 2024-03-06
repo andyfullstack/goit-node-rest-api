@@ -11,7 +11,12 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+const subscriptionSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business"),
+});
+
 export const schemas = {
   registerSchema,
   loginSchema,
+  subscriptionSchema,
 };
