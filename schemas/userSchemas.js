@@ -18,4 +18,5 @@ const subscriptionSchema = Joi.object({
 export const schemas = {
   registerSchema,
   loginSchema,
+  subscriptionSchema,
 };
