@@ -24,11 +24,11 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(401).json({ message: "Email or password is invalid" });
+    return res.status(401).json({ message: "Email or password is incorrect" });
   }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
-    return res.status(401).json({ message: "Email or password is invalid" });
+    return res.status(401).json({ message: "Email or password is incorrect" });
   }
 
   const payload = {
