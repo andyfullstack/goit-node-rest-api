@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 
 const { SECRET_KEY } = process.env;
+console.log(SECRET_KEY);
 
 const register = async (req, res) => {
   const { email, password } = req.body;
