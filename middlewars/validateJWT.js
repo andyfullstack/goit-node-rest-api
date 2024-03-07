@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 import { User } from "../models/user.js";
 import { HttpError } from "../helpers/index.js";
 
@@ -7,6 +8,7 @@ const { SECRET_KEY } = process.env;
 const validateJWT = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
+
   if (bearer !== "Bearer") {
     next(HttpError(401));
   }
