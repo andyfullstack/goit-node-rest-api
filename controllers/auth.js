@@ -108,7 +108,7 @@ const updateAvatar = async (req, res) => {
 
   const filename = `${_id}_${originalname}`;
 
-  const resultUpload = path.join("public", "avatars", filename);
+  const resultUpload = path.join(process.cwd(), "public/avatars", filename);
 
   const img = await Jimp.read(tempUpload);
   img.resize(250, 250).write(tempUpload);
@@ -120,7 +120,7 @@ const updateAvatar = async (req, res) => {
     console.log(error);
   }
 
-  const avatarURL = path.join("public", "avatars", filename);
+  const avatarURL = path.join("avatars", filename);
   const result = await User.findByIdAndUpdate(_id, { avatarURL });
   if (!result) {
     return res.status(404).json({ message: "Not found" });
