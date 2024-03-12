@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 
-const tempDir = path.join(process.cwd(), "temp");
+const tempDir = path.join(process.cwd(), "tmp");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
