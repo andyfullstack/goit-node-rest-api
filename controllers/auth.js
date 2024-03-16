@@ -30,6 +30,14 @@ const register = async (req, res) => {
     verificationToken,
   });
 
+  res.status(201).json({
+    users: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+      avatarURL: newUser.avatarURL,
+    },
+  });
+
   const mail = {
     to: email,
     subject: "Verify email",
@@ -43,14 +51,6 @@ const register = async (req, res) => {
   } catch (error) {
     return res.status(500).json(error.message);
   }
-
-  res.status(201).json({
-    users: {
-      email: newUser.email,
-      subscription: newUser.subscription,
-      avatarURL: newUser.avatarURL,
-    },
-  });
 };
 
 const login = async (req, res) => {
