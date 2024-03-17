@@ -45,13 +45,13 @@ const register = async (req, res) => {
   };
   try {
     await sendEmail(mail);
-    return res.status(201).json({
+    res.json({
       users: {
         email: newUser.email,
         subscription: newUser.subscription,
         avatarURL: newUser.avatarURL,
+        message: "Verification email sent",
       },
-      message: "Verification email sent",
     });
   } catch (error) {
     return res.status(500).json(error.message);
