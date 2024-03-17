@@ -30,6 +30,14 @@ const register = async (req, res) => {
     verificationToken,
   });
 
+  //   res.status(201).json({
+  //     users: {
+  //       email: newUser.email,
+  //       subscription: newUser.subscription,
+  //       avatarURL: newUser.avatarURL,
+  //     },
+  //   });
+
   const mail = {
     to: email,
     subject: "Verify email",
