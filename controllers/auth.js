@@ -35,13 +35,9 @@ const register = async (req, res) => {
     subject: "Verify email",
     html: `<a target="_blank" href="http://localhost:3001/users/verify/${verificationToken}">Verify email</a>`,
   };
+
   try {
     await sendEmail(mail);
-    res.json({
-      users: {
-        message: "Verification email sent",
-      },
-    });
   } catch (error) {
     return res.status(500).json(error.message);
   }
